@@ -1,13 +1,30 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (err) {
+      console.error('Logout failed', err);
+    }
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Meeting Rooms', path: '/meeting-rooms' },
   ];
+
+  // Dynamically add admin route if user is admin
+  if (user?.role === 'ADMIN') {
+    navLinks.push({ name: 'Admin Dashboard', path: '/admin' });
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-cyan-500/30">
@@ -29,7 +46,7 @@ const Layout = ({ children }) => {
             </span>
           </Link>
           
-          <nav>
+          <nav className="flex items-center space-x-6">
             <ul className="flex space-x-2">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path;
@@ -49,6 +66,30 @@ const Layout = ({ children }) => {
                 );
               })}
             </ul>
+
+            <div className="flex items-center space-x-4 border-l border-white/10 pl-6">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20">
+                    <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div>
+                    <span className="text-xs text-indigo-200 font-medium tracking-wide">{user.email}</span>
+                  </div>
+                  <button 
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-sm font-medium text-white hover:text-red-400 bg-white/5 hover:bg-red-500/10 rounded-md transition-colors border border-transparent hover:border-red-500/20"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">Sign in</Link>
+                  <Link to="/register" className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 rounded-md transition-all shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </div>
           </nav>
         </div>
       </header>
