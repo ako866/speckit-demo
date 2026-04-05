@@ -14,6 +14,9 @@ Constraints:
 - Only booking owner can cancel
 
 
+Should the system allow overlapping bookings for the same room, or strictly prevent them?
+
+
 plan
 
 
