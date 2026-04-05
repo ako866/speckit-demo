@@ -65,15 +65,16 @@
 
 [Add more user stories as needed, each with an assigned priority]
 
-### Edge Cases
+### Edge Cases (Principle V)
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
+  ACTION REQUIRED: Per Constitution Principle V, edge cases MUST be strictly documented and handled.
 -->
 
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
+- How does system provide clear feedback on failure (Principle III)?
+- Is data consistency maintained during failure (Principle IV)?
 
 ## Requirements *(mandatory)*
 

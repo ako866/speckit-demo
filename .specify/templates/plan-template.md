@@ -31,7 +31,12 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Simplicity**: Does the design maintain a simple/intuitive UX and architecture?
+- **Invalid Actions**: Does this plan handle user/system errors proactively?
+- **Feedback**: Are logging, UI responses, and observability adequately covered?
+- **Data Consistency**: Are models properly constrained to ensure consistency?
+- **Testability**: Is this fully testable, covering edge cases?
+- **Modularity**: Is the code structure modular, reusable, and maintainable?
 
 ## Project Structure
 
